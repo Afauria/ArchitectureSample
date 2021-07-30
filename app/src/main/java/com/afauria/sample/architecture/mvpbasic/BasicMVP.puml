@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface LoginContract.IPresenter {
+    void login(String username, String password)
+}
+
+interface LoginContract.IView {
+    void onLogin(String name)
+}
+
+class LoginActivity implements LoginContract.IView {
+    LoginContract.IPresenter mPresenter
+}
+
+class LoginPresenter implements LoginContract.IPresenter{
+    LoginContract.IView mView
+}
+
+class LoginModel {
+}
+
+interface ResultCallback<T> {
+    fun onSuccess(result: T)
+    fun onFailure(errorCode: String?, errorMsg: String?)
+}
+
+LoginActivity --> LoginPresenter
+LoginPresenter --> LoginContract.IView
+LoginPresenter --> LoginModel
+LoginModel -.-> ResultCallback
+LoginPresenter --> ResultCallback
+@enduml
